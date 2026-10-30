@@ -151,35 +151,35 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <p className="eyebrow">STUDENT DIRECTORY / IMPORT STUDIO</p>
-            <h2 id="student-import-title" className="mt-1 text-xl font-semibold text-white">
+            <h2 id="student-import-title" className="mt-1 text-xl font-semibold text-slate-900">
               Validated roster intake
             </h2>
-            <p className="mt-1 max-w-2xl text-sm text-blue-100/70">
+            <p className="mt-1 max-w-2xl text-sm text-slate-600">
               Upload a CSV, XLSX, or XLS roster. The server maps known columns, validates each record, creates/updates student records, and populates student tables with automatic deduplication.
             </p>
           </div>
-          <ShieldCheck className="size-7 shrink-0 text-cyan-300" aria-hidden="true" />
+          <ShieldCheck className="size-7 shrink-0 text-[#ff1f6d]" aria-hidden="true" />
         </div>
 
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-cyan-300/15 bg-cyan-950/15 px-4 py-3">
-          <p className="text-xs leading-5 text-blue-100/70">
-            Use canonical headers <span className="font-mono text-cyan-200">Name, Email, Username, Student ID, USN, Branch, Semester, Section, Class</span>.
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-pink-200 bg-pink-50/60 px-4 py-3">
+          <p className="text-xs leading-5 text-slate-700">
+            Use canonical headers <span className="font-mono text-[#ff1f6d] font-bold">Name, Email, Username, Student ID, USN, Branch, Semester, Section, Class</span>.
           </p>
           <Button
             type="button"
             variant="outline"
             onClick={downloadRosterTemplate}
-            className="shrink-0 border-cyan-300/40 text-cyan-100 hover:bg-cyan-300/10"
+            className="shrink-0 border-pink-300 bg-white text-[#ff1f6d] hover:bg-pink-100"
           >
             <FileSpreadsheet className="mr-2 size-4" />
             Download template
           </Button>
         </div>
 
-        <label className="file-drop-zone flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-cyan-300/45 px-4 py-5 transition hover:border-cyan-200 hover:bg-white/5">
-          {previewMutation.isPending ? <Loader2 className="size-5 animate-spin text-cyan-300" /> : <Upload className="size-5 text-cyan-300" />}
-          <span className="text-sm text-blue-50">
-            Choose roster file <span className="text-blue-200/60">(CSV, XLSX, XLS · max. 10 MB)</span>
+        <label className="file-drop-zone flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-5 transition hover:border-[#ff1f6d] hover:bg-pink-50/30">
+          {previewMutation.isPending ? <Loader2 className="size-5 animate-spin text-[#ff1f6d]" /> : <Upload className="size-5 text-[#ff1f6d]" />}
+          <span className="text-sm font-medium text-slate-800">
+            Choose roster file <span className="text-slate-500">(CSV, XLSX, XLS · max. 10 MB)</span>
           </span>
           <Input
             className="sr-only"
@@ -195,68 +195,71 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
           <div className="mt-5 space-y-4">
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
               {Object.entries(preview.summary).map(([label, value]) => (
-                <div key={label} className="rounded-lg border border-white/10 bg-slate-950/30 p-3">
-                  <p className="text-[10px] uppercase tracking-[0.14em] text-blue-200/65">{label}</p>
-                  <p className="mt-1 text-lg font-semibold text-white">{value}</p>
+                <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-slate-500 font-bold">{label}</p>
+                  <p className="mt-1 text-lg font-semibold text-slate-900">{value}</p>
                 </div>
               ))}
             </div>
 
             {/* Target Table Configuration & Password */}
-            <div className="rounded-xl border border-cyan-300/20 bg-cyan-950/20 p-4 space-y-4">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                <FolderPlus className="size-4 text-cyan-300" />
+            <div className="rounded-xl border border-pink-200 bg-pink-50/50 p-4 space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                <FolderPlus className="size-4 text-[#ff1f6d]" />
                 Student Table Assignment & Deduplication
               </h3>
 
               <div className="grid gap-3 sm:grid-cols-3">
-                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "new" ? "border-cyan-300 bg-cyan-300/10" : "border-white/15 bg-slate-950/30"}`}>
+                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "new" ? "border-[#ff1f6d] bg-white shadow-sm" : "border-slate-200 bg-white/80"}`}>
                   <input
                     type="radio"
                     name="tableTarget"
                     checked={tableTargetMode === "new"}
                     onChange={() => setTableTargetMode("new")}
+                    className="accent-[#ff1f6d]"
                   />
                   <div>
-                    <p className="text-xs font-semibold text-white">Create New Table</p>
-                    <p className="text-[11px] text-blue-100/60">Generate a custom student table</p>
+                    <p className="text-xs font-semibold text-slate-900">Create New Table</p>
+                    <p className="text-[11px] text-slate-500">Generate a custom student table</p>
                   </div>
                 </label>
 
-                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "existing" ? "border-cyan-300 bg-cyan-300/10" : "border-white/15 bg-slate-950/30"}`}>
+                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "existing" ? "border-[#ff1f6d] bg-white shadow-sm" : "border-slate-200 bg-white/80"}`}>
                   <input
                     type="radio"
                     name="tableTarget"
                     checked={tableTargetMode === "existing"}
                     onChange={() => setTableTargetMode("existing")}
+                    className="accent-[#ff1f6d]"
                   />
                   <div>
-                    <p className="text-xs font-semibold text-white">Add to Existing Table</p>
-                    <p className="text-[11px] text-blue-100/60">Append & deduplicate into table</p>
+                    <p className="text-xs font-semibold text-slate-900">Add to Existing Table</p>
+                    <p className="text-[11px] text-slate-500">Append & deduplicate into table</p>
                   </div>
                 </label>
 
-                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "none" ? "border-cyan-300 bg-cyan-300/10" : "border-white/15 bg-slate-950/30"}`}>
+                <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 transition ${tableTargetMode === "none" ? "border-[#ff1f6d] bg-white shadow-sm" : "border-slate-200 bg-white/80"}`}>
                   <input
                     type="radio"
                     name="tableTarget"
                     checked={tableTargetMode === "none"}
                     onChange={() => setTableTargetMode("none")}
+                    className="accent-[#ff1f6d]"
                   />
                   <div>
-                    <p className="text-xs font-semibold text-white">Master Directory Only</p>
-                    <p className="text-[11px] text-blue-100/60">Do not assign to custom table</p>
+                    <p className="text-xs font-semibold text-slate-900">Master Directory Only</p>
+                    <p className="text-[11px] text-slate-500">Do not assign to custom table</p>
                   </div>
                 </label>
               </div>
 
               {tableTargetMode === "new" && (
                 <div>
-                  <label className="text-xs font-semibold text-blue-100/75">New Student Table Name</label>
+                  <label className="text-xs font-semibold text-slate-700">New Student Table Name</label>
                   <Input
                     value={newTableName}
                     onChange={(e) => setNewTableName(e.target.value)}
-                    className="mt-1 border-white/20 bg-slate-950/40 text-white"
+                    className="mt-1 border-slate-300 bg-white text-slate-900"
                     placeholder="e.g. Section B Roster Table"
                   />
                 </div>
@@ -264,11 +267,11 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
 
               {tableTargetMode === "existing" && (
                 <div>
-                  <label className="text-xs font-semibold text-blue-100/75">Select Target Student Table</label>
+                  <label className="text-xs font-semibold text-slate-700">Select Target Student Table</label>
                   <select
                     value={selectedTableId || ""}
                     onChange={(e) => setSelectedTableId(Number(e.target.value) || null)}
-                    className="mt-1 w-full h-9 border border-white/20 bg-slate-950/60 px-3 text-xs text-white rounded"
+                    className="mt-1 w-full h-9 border border-slate-300 bg-white px-3 text-xs text-slate-800 rounded"
                   >
                     <option value="">Choose existing table...</option>
                     {tables.map((t) => (
@@ -281,13 +284,13 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-blue-100">
+                <label className="block text-xs font-semibold text-slate-700">
                   Temporary password for new students (Optional — defaults to USN)
                 </label>
                 <PasswordInput
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  className="mt-1 border-white/20 bg-slate-950/40 text-white"
+                  className="mt-1 border-slate-300 bg-white text-slate-900"
                   placeholder="Defaults to student USN"
                 />
               </div>
@@ -333,7 +336,7 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
             <Button
               onClick={() => void confirmImport()}
               disabled={confirmMutation.isPending || preview.summary.valid === 0}
-              className="w-full bg-cyan-300 text-[#05205c] hover:bg-cyan-200 font-bold py-3 text-sm"
+              className="w-full bg-[#ff1f6d] text-white hover:bg-[#e0145c] font-bold py-3 text-sm"
             >
               {confirmMutation.isPending ? <Loader2 className="mr-2 size-4 animate-spin" /> : <FileSpreadsheet className="mr-2 size-4" />}
               Confirm Safe Roster Import & Create/Populate Student Table
@@ -344,11 +347,11 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
 
       {/* Managed Custom Tables & Delete Table Panel */}
       <section className="blueprint-panel p-5">
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <p className="eyebrow">CUSTOM STUDENT TABLES</p>
-            <h2 className="text-lg font-semibold text-white">Manage & Delete Custom Tables</h2>
-            <p className="text-xs text-blue-100/70 mt-0.5">
+            <h2 className="text-lg font-semibold text-slate-900">Manage & Delete Custom Tables</h2>
+            <p className="text-xs text-slate-500 mt-0.5">
               Review existing custom student tables created via import or manual grouping.
             </p>
           </div>
@@ -357,16 +360,16 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
         {tables.length > 0 ? (
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {tables.map((t) => (
-              <div key={t.id} className="rounded-xl border border-white/15 bg-slate-950/40 p-4 flex flex-col justify-between gap-3">
+              <div key={t.id} className="rounded-xl border border-slate-200 bg-slate-50 p-4 flex flex-col justify-between gap-3">
                 <div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-white text-base">{t.name}</h3>
+                    <h3 className="font-semibold text-slate-900 text-base">{t.name}</h3>
                     <span className="technical-chip">{t.students.length} students</span>
                   </div>
-                  {t.description && <p className="mt-1 text-xs text-blue-100/60 line-clamp-2">{t.description}</p>}
+                  {t.description && <p className="mt-1 text-xs text-slate-500 line-clamp-2">{t.description}</p>}
                 </div>
-                <div className="pt-2 border-t border-white/10 flex justify-between items-center">
-                  <a href="/teacher/tables" className="text-xs font-semibold text-cyan-200 hover:underline">
+                <div className="pt-2 border-t border-slate-200 flex justify-between items-center">
+                  <a href="/teacher/tables" className="text-xs font-semibold text-[#ff1f6d] hover:underline">
                     View in Studio →
                   </a>
                   <button
@@ -376,7 +379,7 @@ export function StudentImportPanel({ onImportConfirmed }: { onImportConfirmed?: 
                         deleteTable.mutate({ tableId: t.id });
                       }
                     }}
-                    className="inline-flex items-center gap-1 text-xs text-rose-300 hover:text-rose-100 font-semibold"
+                    className="inline-flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold"
                   >
                     <Trash2 className="size-3.5" />
                     Delete Table

@@ -51,7 +51,11 @@ function TakeAssessmentContent() {
     if (!attemptId || !assessment.data || completed) return;
     const report = createIntegrityReporter((eventType: IntegrityEventType) => violation.mutate({ attemptId, eventType }, { onSuccess: result => { const notice = { eventType, count: result.data.violationCount, autoSubmitted: result.data.autoSubmitted }; setIntegrityNotice(notice); if (result.data.autoSubmitted && result.data.result) { toast.error(integrityWarningMessage(eventType, result.data.violationCount, true, policy.violationThreshold ?? 5)); setCompleted(result.data.result); } else { toast.warning(integrityWarningMessage(eventType, result.data.violationCount)); } }, onError: error => toast.error(error instanceof Error ? error.message : "Integrity event could not be recorded.") }));
     const onVisibility = () => { if (document.hidden && policy.detectTabSwitch) report("TAB_HIDDEN"); };
-    const onBlur = () => { if (policy.detectWindowBlur) report("WINDOW_BLUR"); };
+    const onBlur = () => {
+      // Ignore blur when document is hidden (mobile screen lock / screen off) so it doesn't trigger double penalty or unexpected submit
+      if (document.hidden) return;
+      if (policy.detectWindowBlur) report("WINDOW_BLUR");
+    };
     const onFullscreen = () => { if (policy.detectFullscreenExit && !document.fullscreenElement) report("FULLSCREEN_EXIT"); };
     const onClipboard = (event: ClipboardEvent) => { if (!policy.detectClipboard) return; event.preventDefault(); report(event.type === "copy" ? "COPY" : event.type === "paste" ? "PASTE" : "CUT"); };
     const onContext = (event: MouseEvent) => { if (policy.detectContextMenu) { event.preventDefault(); report("CONTEXT_MENU"); } };

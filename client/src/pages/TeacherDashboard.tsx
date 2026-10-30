@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { BookOpenCheck, Clipboard, Download, FileSpreadsheet, Loader2, Plus, Send, Trash2, Trophy, Upload } from "lucide-react";
+import { BookOpenCheck, Clipboard, Download, FileSpreadsheet, Loader2, Plus, Send, Trash2, Trophy, Upload, Users, FileText, ClipboardCheck, BarChart3 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -146,17 +146,17 @@ export default function TeacherDashboard() {
       <header className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div>
           <p className="eyebrow">TEACHER / ASSESSMENT OPERATIONS</p>
-          <h1 className="mt-2 text-3xl font-semibold text-white">Assessment studio & command center</h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-blue-100/70">
+          <h1 className="mt-2 text-3xl font-semibold text-slate-900">Assessment studio & command center</h1>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
             Build MCQ drafts, publish to custom student tables or all students, and review student test performance and integrity results.
           </p>
         </div>
-        <label className="block text-xs font-semibold text-blue-100/75">
+        <label className="block text-xs font-semibold text-slate-700">
           Filter managed records
           <Input
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="mt-1.5 w-full border-white/20 bg-slate-950/40 text-white lg:w-64"
+            className="mt-1.5 w-full border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 lg:w-64"
             placeholder="Student, assessment, status…"
           />
         </label>
@@ -171,7 +171,7 @@ export default function TeacherDashboard() {
           ["Submitted attempts", (results.data?.data ?? []).length],
         ].map(([label, value]) => (
           <div key={String(label)} className="metric-card">
-            <BookOpenCheck className="size-5 text-cyan-300" />
+            <BookOpenCheck className="size-5 text-[#ff1f6d]" />
             <span>{label}</span>
             <strong>{value}</strong>
           </div>
@@ -185,16 +185,16 @@ export default function TeacherDashboard() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="eyebrow">MCQ AUTHORING ENGINE</p>
-              <h2 className="mt-1 text-xl font-semibold text-white">
+              <h2 className="mt-1 text-xl font-semibold text-slate-900">
                 {assessmentForm.editingId ? `Edit Assessment #${assessmentForm.editingId}` : "Create MCQ assessment"}
               </h2>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" onClick={downloadQuestionTemplate} className="border-cyan-300/40 text-cyan-100 hover:bg-cyan-300/10">
+              <Button type="button" variant="outline" onClick={downloadQuestionTemplate} className="border-pink-200 bg-pink-50 text-[#ff1f6d] hover:bg-pink-100">
                 <Download className="mr-2 size-4" />
                 Excel template
               </Button>
-              <label className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-cyan-300/40 bg-slate-950/40 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-300/10">
+              <label className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-300 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">
                 <Upload className="mr-2 size-4" />
                 Import XLSX
                 <input key={questionFileInputKey} type="file" accept=".xlsx,.xls,.csv" onChange={(e) => void importQuestions(e.target.files?.[0])} className="hidden" />
@@ -202,70 +202,81 @@ export default function TeacherDashboard() {
             </div>
           </div>
 
-          <form onSubmit={submitAssessment} className="mt-4 space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <label className="text-xs font-semibold text-blue-100/75 lg:col-span-2">
-                Assessment title
-                <Input required value={assessmentForm.title} onChange={(e) => setAssessmentForm((c) => ({ ...c, title: e.target.value }))} className="mt-1 border-white/20 bg-slate-950/40 text-white" placeholder="e.g. Data Structures & Algorithms Midterm" />
-              </label>
-              <label className="text-xs font-semibold text-blue-100/75">
-                Start Window (Opens at)
-                <Input required type="datetime-local" value={assessmentForm.startAt} onChange={(e) => setAssessmentForm((c) => ({ ...c, startAt: e.target.value }))} className="mt-1 border-white/20 bg-slate-950/40 text-white text-xs" />
-              </label>
-              <label className="text-xs font-semibold text-blue-100/75">
-                End Window (Closes at)
-                <Input required type="datetime-local" value={assessmentForm.endAt} onChange={(e) => setAssessmentForm((c) => ({ ...c, endAt: e.target.value }))} className="mt-1 border-white/20 bg-slate-950/40 text-white text-xs" />
-              </label>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="text-xs font-semibold text-blue-100/75">
-                Test Duration (Minutes per attempt)
-                <Input required type="number" min={1} max={720} value={assessmentForm.durationMinutes} onChange={(e) => setAssessmentForm((c) => ({ ...c, durationMinutes: e.target.value }))} className="mt-1 border-white/20 bg-slate-950/40 text-white" placeholder="30" />
-              </label>
-            </div>
+          <form onSubmit={submitAssessment} className="mt-5 space-y-4">
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  Assessment title
+                </label>
+                <Input required value={assessmentForm.title} onChange={(e) => setAssessmentForm((c) => ({ ...c, title: e.target.value }))} className="w-full border-slate-300 bg-white text-slate-900" placeholder="e.g. Data Structures & Algorithms Midterm" />
+              </div>
 
-            <div>
-              <label className="text-xs font-semibold text-blue-100/75">
-                Access code <span className="font-normal text-blue-100/50">(optional — leave blank for open access)</span>
-                <div className="mt-1 flex gap-2">
-                  <Input
-                    value={assessmentForm.accessCode}
-                    onChange={(e) => setAssessmentForm((c) => ({ ...c, accessCode: e.target.value }))}
-                    className="border-white/20 bg-slate-950/40 text-white font-mono"
-                    placeholder="e.g. QUIZ2026"
-                    maxLength={32}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setAssessmentForm((c) => ({ ...c, accessCode: Math.random().toString(36).slice(2, 9).toUpperCase() }))}
-                    className="shrink-0 border-cyan-300/40 text-cyan-100 hover:bg-cyan-300/10"
-                  >
-                    Generate
-                  </Button>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                    Start Window (Opens at)
+                  </label>
+                  <Input required type="datetime-local" value={assessmentForm.startAt} onChange={(e) => setAssessmentForm((c) => ({ ...c, startAt: e.target.value }))} className="w-full border-slate-300 bg-white text-slate-900 text-xs" />
                 </div>
-              </label>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                    End Window (Closes at)
+                  </label>
+                  <Input required type="datetime-local" value={assessmentForm.endAt} onChange={(e) => setAssessmentForm((c) => ({ ...c, endAt: e.target.value }))} className="w-full border-slate-300 bg-white text-slate-900 text-xs" />
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                    Test Duration (Minutes per attempt)
+                  </label>
+                  <Input required type="number" min={1} max={720} value={assessmentForm.durationMinutes} onChange={(e) => setAssessmentForm((c) => ({ ...c, durationMinutes: e.target.value }))} className="w-full border-slate-300 bg-white text-slate-900" placeholder="30" />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                    Access code <span className="font-normal text-slate-500">(optional)</span>
+                  </label>
+                  <div className="flex gap-2">
+                    <Input
+                      value={assessmentForm.accessCode}
+                      onChange={(e) => setAssessmentForm((c) => ({ ...c, accessCode: e.target.value }))}
+                      className="w-full border-slate-300 bg-white text-slate-900 font-mono"
+                      placeholder="e.g. QUIZ2026"
+                      maxLength={32}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setAssessmentForm((c) => ({ ...c, accessCode: Math.random().toString(36).slice(2, 9).toUpperCase() }))}
+                      className="shrink-0 border-slate-300 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                    >
+                      Generate
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="max-h-[480px] space-y-3 overflow-y-auto pr-1">
+            <div className="max-h-[480px] space-y-4 overflow-y-auto pr-1">
               {assessmentForm.questions.map((question, index) => (
-                <div key={index} className="rounded-xl border border-white/10 bg-slate-950/30 p-4 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-cyan-300">Question {index + 1}</span>
+                <div key={index} className="rounded-xl border border-slate-300 bg-white p-4 space-y-3 shadow-sm">
+                  <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+                    <span className="text-xs font-bold text-[#ff1f6d]">Question {index + 1}</span>
                     {assessmentForm.questions.length > 1 && (
-                      <button type="button" onClick={() => setAssessmentForm((c) => ({ ...c, questions: c.questions.filter((_, i) => i !== index) }))} className="text-xs text-rose-300 hover:underline">
+                      <button type="button" onClick={() => setAssessmentForm((c) => ({ ...c, questions: c.questions.filter((_, i) => i !== index) }))} className="text-xs font-semibold text-rose-600 hover:underline">
                         Remove
                       </button>
                     )}
                   </div>
-                  <Input required value={question.questionText} onChange={(e) => updateQuestion(index, "questionText", e.target.value)} className="border-white/20 bg-slate-950/40 text-white" placeholder="Type question text..." />
-                  <div className="grid gap-2 sm:grid-cols-2">
+                  <Input required value={question.questionText} onChange={(e) => updateQuestion(index, "questionText", e.target.value)} className="border-slate-300 bg-slate-50 text-slate-900 focus:bg-white" placeholder="Type question text..." />
+                  <div className="grid gap-2.5 sm:grid-cols-2">
                     {(["firstOption", "secondOption", "thirdOption", "fourthOption"] as const).map((optKey, optIdx) => {
                       const optId = ["a", "b", "c", "d"][optIdx];
                       return (
-                        <div key={optKey} className="flex items-center gap-2">
-                          <input type="radio" name={`correct-${index}`} checked={question.correctOption === optId} onChange={() => updateQuestion(index, "correctOption", optId)} className="accent-cyan-300" />
-                          <Input required value={question[optKey]} onChange={(e) => updateQuestion(index, optKey, e.target.value)} className="border-white/20 bg-slate-950/40 text-white text-xs" placeholder={`Option ${optId.toUpperCase()}`} />
+                        <div key={optKey} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50/80 p-1.5 focus-within:border-[#ff1f6d]">
+                          <input type="radio" name={`correct-${index}`} checked={question.correctOption === optId} onChange={() => updateQuestion(index, "correctOption", optId)} className="accent-[#ff1f6d] size-4 ml-1" />
+                          <Input required value={question[optKey]} onChange={(e) => updateQuestion(index, optKey, e.target.value)} className="border-none bg-transparent text-slate-900 text-xs shadow-none focus-visible:ring-0" placeholder={`Option ${optId.toUpperCase()}`} />
                         </div>
                       );
                     })}
@@ -275,11 +286,11 @@ export default function TeacherDashboard() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" onClick={() => setAssessmentForm((c) => ({ ...c, questions: [...c.questions, { ...emptyQuestion }] }))} className="border-cyan-300/40 text-cyan-100 hover:bg-cyan-300/10">
+              <Button type="button" variant="outline" onClick={() => setAssessmentForm((c) => ({ ...c, questions: [...c.questions, { ...emptyQuestion }] }))} className="border-slate-300 bg-white text-slate-800 hover:bg-slate-50">
                 <Plus className="mr-2 size-4" />
                 Add question
               </Button>
-              <Button disabled={createAssessment.isPending || updateAssessment.isPending} className="bg-cyan-300 text-[#05205c] hover:bg-cyan-200">
+              <Button disabled={createAssessment.isPending || updateAssessment.isPending} className="bg-[#ff1f6d] text-white hover:bg-[#e0145c]">
                 {(createAssessment.isPending || updateAssessment.isPending) && <Loader2 className="mr-2 size-4 animate-spin" />}
                 Save {assessmentForm.questions.length} question{assessmentForm.questions.length === 1 ? "" : "s"} as draft
               </Button>
@@ -292,18 +303,18 @@ export default function TeacherDashboard() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="eyebrow">ASSESSMENT REGISTER</p>
-              <h2 className="mt-1 text-xl font-semibold text-white">My authored assessments</h2>
+              <h2 className="mt-1 text-xl font-semibold text-slate-900">My authored assessments</h2>
             </div>
-            <span className="technical-chip">Publish targets: active students & student tables</span>
+            <span className="technical-chip">Publish targets: Active students & Student tables</span>
           </div>
 
           {publishTarget && (
-            <div className="mt-5 rounded-xl border border-cyan-300/25 bg-cyan-950/20 p-4">
+            <div className="mt-5 rounded-xl border border-pink-200 bg-pink-50/60 p-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="eyebrow">PUBLISH TARGET</p>
-                  <h3 className="mt-1 font-semibold text-white">{publishTarget.title}</h3>
-                  <p className="mt-1 text-sm text-blue-100/70">Target all students, a custom student table, or specific roster students.</p>
+                  <h3 className="mt-1 font-semibold text-slate-900">{publishTarget.title}</h3>
+                  <p className="mt-1 text-sm text-slate-600">Target all students, a custom student table, or specific roster students.</p>
                 </div>
                 <button
                   type="button"
@@ -312,7 +323,7 @@ export default function TeacherDashboard() {
                     setSelectedStudentIds([]);
                     setSelectedPublishTableId(null);
                   }}
-                  className="text-xs font-bold text-blue-200 hover:text-white"
+                  className="text-xs font-bold text-slate-600 hover:text-slate-900"
                 >
                   Cancel
                 </button>
@@ -322,17 +333,17 @@ export default function TeacherDashboard() {
                   type="button"
                   onClick={() => publish.mutate({ assessmentId: publishTarget.assessmentId, target: "ALL_ACTIVE" })}
                   disabled={publish.isPending || !eligibleStudents.length}
-                  className="rounded-lg border border-white/15 p-3 text-left transition hover:border-cyan-200 disabled:opacity-50"
+                  className="rounded-lg border border-slate-200 bg-white p-3 text-left transition hover:border-[#ff1f6d] disabled:opacity-50"
                 >
-                  <span className="block text-sm font-semibold text-white">All roster students</span>
-                  <span className="mt-1 block text-xs text-blue-100/65">Publish to {eligibleStudents.length} active students.</span>
+                  <span className="block text-sm font-semibold text-slate-900">All roster students</span>
+                  <span className="mt-1 block text-xs text-slate-500">Publish to {eligibleStudents.length} active students.</span>
                 </button>
-                <div className="rounded-lg border border-white/15 p-3">
-                  <p className="text-sm font-semibold text-white">Publish to Student Table</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3">
+                  <p className="text-sm font-semibold text-slate-900">Publish to Student Table</p>
                   <select
                     value={selectedPublishTableId || ""}
                     onChange={(e) => setSelectedPublishTableId(Number(e.target.value) || null)}
-                    className="mt-2 w-full h-8 border border-white/20 bg-slate-950/60 px-2 text-xs text-white rounded"
+                    className="mt-2 w-full h-8 border border-slate-300 bg-white px-2 text-xs text-slate-800 rounded"
                   >
                     <option value="">Select a student table...</option>
                     {tablesList.map((t) => (
@@ -348,29 +359,30 @@ export default function TeacherDashboard() {
                       publish.mutate({ assessmentId: publishTarget.assessmentId, target: "TABLE", tableId: selectedPublishTableId });
                     }}
                     disabled={publish.isPending || !selectedPublishTableId}
-                    className="mt-3 w-full bg-cyan-300 text-[#05205c] hover:bg-cyan-200"
+                    className="mt-3 w-full bg-[#ff1f6d] text-white hover:bg-[#e0145c]"
                   >
                     <Send className="mr-2 size-4" />
                     Publish to Table ({targetTable?.students.length ?? 0})
                   </Button>
                 </div>
-                <div className="rounded-lg border border-white/15 p-3">
-                  <p className="text-sm font-semibold text-white">Selected roster students</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3">
+                  <p className="text-sm font-semibold text-slate-900">Selected roster students</p>
                   <div className="mt-2 max-h-32 space-y-2 overflow-auto">
                     {eligibleStudents.map((student) => (
-                      <label key={student.id} className="flex items-center gap-2 text-xs text-blue-100/80">
+                      <label key={student.id} className="flex items-center gap-2 text-xs text-slate-700">
                         <input
                           type="checkbox"
                           checked={selectedStudentIds.includes(student.id)}
                           onChange={(event) =>
                             setSelectedStudentIds((current) => (event.target.checked ? [...current, student.id] : current.filter((id) => id !== student.id)))
                           }
+                          className="accent-[#ff1f6d]"
                         />
-                        {student.name} <span className="text-blue-200/50">{student.profile?.usn || student.profile?.studentId || student.email}</span>
+                        {student.name} <span className="text-slate-400">{student.profile?.usn || student.profile?.studentId || student.email}</span>
                       </label>
                     ))}
                   </div>
-                  <Button type="button" onClick={publishSelected} disabled={publish.isPending || !selectedStudentCount} className="mt-3 w-full bg-cyan-300 text-[#05205c] hover:bg-cyan-200">
+                  <Button type="button" onClick={publishSelected} disabled={publish.isPending || !selectedStudentCount} className="mt-3 w-full bg-[#ff1f6d] text-white hover:bg-[#e0145c]">
                     <Send className="mr-2 size-4" />
                     Publish selected ({selectedStudentCount})
                   </Button>
@@ -399,20 +411,20 @@ export default function TeacherDashboard() {
                     const assignedTables = ((test as any).assignedTables ?? []) as string[];
                     return (
                       <tr key={test.id}>
-                        <td className="font-semibold text-white">
+                        <td className="font-semibold text-slate-900">
                           {test.title}
-                          <span className="block text-xs text-blue-200/55">{test.questions?.length ?? 0} questions</span>
+                          <span className="block text-xs font-normal text-slate-500">{test.questions?.length ?? 0} questions</span>
                         </td>
                         <td>
                           {test.status === "PUBLISHED" || assignedCount > 0 ? (
                             <div className="space-y-1">
-                              <span className="technical-chip border-cyan-400/40 text-cyan-300">
+                              <span className="technical-chip border-pink-200 bg-pink-50 text-[#ff1f6d]">
                                 {assignedCount} student{assignedCount !== 1 ? "s" : ""}
                               </span>
                               {assignedTables.length > 0 && (
                                 <div className="flex flex-wrap gap-1 mt-1">
                                   {assignedTables.map((tName) => (
-                                    <span key={tName} className="technical-chip text-[10px] bg-slate-900/60">
+                                    <span key={tName} className="technical-chip text-[10px] bg-slate-100 border-slate-200 text-slate-700">
                                       {tName}
                                     </span>
                                   ))}
@@ -420,23 +432,23 @@ export default function TeacherDashboard() {
                               )}
                             </div>
                           ) : (
-                            <span className="text-xs text-blue-200/50">Not published</span>
+                            <span className="text-xs text-slate-400">Not published</span>
                           )}
                         </td>
-                        <td>{new Date(test.startAt).toLocaleString()}</td>
-                        <td>{test.accessCodeEnabled ? <span className="font-mono text-xs">{test.accessCode || "—"}</span> : "Disabled"}</td>
+                        <td className="text-slate-700 text-xs">{new Date(test.startAt).toLocaleString()}</td>
+                        <td>{test.accessCodeEnabled ? <span className="font-mono text-xs text-slate-800">{test.accessCode || "—"}</span> : <span className="text-slate-400 text-xs">Disabled</span>}</td>
                         <td>
-                          <span className="technical-chip">{test.status}</span>
+                          <span className="technical-chip border-pink-200 bg-pink-50 text-[#ff1f6d]">{test.status}</span>
                         </td>
                         <td>
                           {test.status === "PUBLISHED" ? (
                             test.resultsPublished ? (
-                              <span className="technical-chip border-emerald-400/40 text-emerald-300">Published</span>
+                              <span className="technical-chip border-emerald-300 bg-emerald-50 text-emerald-700">Published</span>
                             ) : (
-                              <span className="technical-chip border-amber-400/40 text-amber-200">Hidden</span>
+                              <span className="technical-chip border-pink-200 bg-pink-50 text-[#ff1f6d]">Hidden</span>
                             )
                           ) : (
-                            <span className="text-xs text-blue-200/50">—</span>
+                            <span className="text-xs text-slate-400">—</span>
                           )}
                         </td>
                         <td>

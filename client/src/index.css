@@ -1,27 +1,195 @@
 @import "tailwindcss";
 
-:root { font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; color: #f8fbff; background: #041948; }
+:root {
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+  
+  --sidebar-bg: #070c1e;
+  --pink-primary: #ff1f6d;
+  --pink-soft: #fff0f5;
+  --pink-border: #ffd4e3;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --card-bg: #ffffff;
+  --border-light: #f1f5f9;
+}
+
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; background: #041948; }
-button, input, textarea { font: inherit; }
-.blueprint-surface { position: relative; overflow: hidden; background-color: #041948; background-image: linear-gradient(rgba(143, 211, 255, .075) 1px, transparent 1px), linear-gradient(90deg, rgba(143, 211, 255, .075) 1px, transparent 1px), radial-gradient(circle at 92% 5%, rgba(21, 134, 255, .2), transparent 28rem); background-size: 24px 24px, 24px 24px, auto; }
-.blueprint-surface::before { content: ""; pointer-events: none; position: absolute; inset: 15px; border: 1px solid rgba(152, 218, 255, .18); clip-path: polygon(0 0, 75px 0, 88px 12px, 100% 12px, 100% 100%, 0 100%); }
-.blueprint-panel { position: relative; border: 1px solid rgba(168, 225, 255, .24); background: linear-gradient(140deg, rgba(10, 45, 112, .88), rgba(4, 25, 72, .9)); box-shadow: inset 0 1px rgba(255, 255, 255, .04), 0 20px 55px rgba(0, 7, 30, .19); }
-.blueprint-panel::before { content: ""; position: absolute; top: -1px; left: -1px; width: 38px; height: 18px; border-top: 2px solid #6fe8ff; border-left: 2px solid #6fe8ff; pointer-events: none; }
-.eyebrow { color: #87d9ff; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: .16em; line-height: 1.2; }
-.metric-card { display: flex; min-height: 112px; flex-direction: column; gap: 8px; border: 1px solid rgba(168, 225, 255, .18); background: rgba(2, 19, 61, .55); padding: 18px; }
-.metric-card span { color: rgba(216, 239, 255, .66); font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.metric-card strong { color: #fff; font-size: 28px; font-weight: 700; line-height: 1; }
-.technical-chip { display: inline-flex; width: fit-content; align-items: center; border: 1px solid rgba(136, 221, 255, .32); background: rgba(93, 210, 255, .08); padding: 4px 8px; color: #d7f6ff; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-.technical-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px; }
-.technical-table th { border-bottom: 1px solid rgba(183, 230, 255, .28); padding: 12px 14px; color: rgba(201, 235, 255, .65); font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .12em; text-align: left; text-transform: uppercase; }
-.technical-table td { border-bottom: 1px solid rgba(183, 230, 255, .10); padding: 13px 14px; color: rgba(225, 244, 255, .78); vertical-align: middle; }
-.technical-table tr:hover td { background: rgba(89, 214, 255, .045); }
-.empty-state { margin-top: 20px; border-left: 2px solid #6fe8ff; background: rgba(111, 232, 255, .055); padding: 14px 16px; color: rgba(221, 244, 255, .72); font-size: 14px; line-height: 1.55; }
-.file-drop-zone { background: rgba(3, 25, 76, .42); }
-.option-choice { display: flex; align-items: center; gap: 12px; border: 1px solid rgba(177, 225, 255, .2); background: rgba(3, 25, 76, .4); padding: 14px; color: rgba(234, 248, 255, .9); transition: background .16s, border-color .16s, transform .16s; }
-.option-choice:hover { border-color: rgba(111, 232, 255, .7); background: rgba(111, 232, 255, .08); }
-.option-choice:active { transform: scale(.985); }
-.option-choice-selected { border-color: #6fe8ff; background: rgba(111, 232, 255, .14); box-shadow: inset 3px 0 #6fe8ff; }
-.option-token { display: inline-flex; size: 26px; align-items: center; justify-content: center; border: 1px solid rgba(111, 232, 255, .6); color: #8eefff; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-@media (prefers-reduced-motion: no-preference) { .blueprint-panel, .metric-card, .option-choice { transition: transform 180ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.23,1,.32,1), background 180ms cubic-bezier(.23,1,.32,1); } .blueprint-panel:hover { border-color: rgba(111, 232, 255, .38); } }
+body { margin: 0; min-width: 320px; background: #f8fafc; color: #0f172a; }
+button, input, textarea, select { font: inherit; }
+
+/* Light Main Content Area */
+.blueprint-surface {
+  position: relative;
+  background-color: #f1f5f9;
+}
+
+/* White Card Containers with Distinct Darker Shadows & Border Contrast */
+.blueprint-panel {
+  position: relative;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  color: #0f172a;
+}
+
+/* Bright Hot Pink Eyebrow Headers */
+.eyebrow {
+  color: #ff1f6d;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Light Metric Stat Cards with Distinct Shadows & Rounded Shapes */
+.metric-card {
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px -3px rgba(15, 23, 42, 0.07);
+}
+
+.metric-card svg {
+  color: #ff1f6d !important;
+}
+
+.metric-card span {
+  color: #64748b;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  color: #ff1f6d;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* Soft Pink Badges & Action Chips */
+.technical-chip {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid #ffd4e3;
+  background: #fff0f5;
+  padding: 4px 10px;
+  color: #ff1f6d;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 6px;
+}
+
+/* Clean Tables with Slate Headers & Light Rows */
+.technical-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #ffffff;
+}
+
+.technical-table th {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 16px;
+  color: #64748b;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.technical-table td {
+  border-bottom: 1px solid #f8fafc;
+  padding: 16px;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.technical-table tr:hover td {
+  background: #fafafc;
+}
+
+.empty-state {
+  margin-top: 20px;
+  border-left: 3px solid #ff1f6d;
+  background: #fff0f5;
+  padding: 16px;
+  color: #0f172a;
+  font-size: 14px;
+  line-height: 1.55;
+  border-radius: 0 8px 8px 0;
+}
+
+.file-drop-zone {
+  background: #f8fafc;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+}
+
+/* Quiz Option Selection Styling for Student Interface */
+.option-choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 16px;
+  color: #0f172a;
+  border-radius: 12px;
+  transition: background 0.16s, border-color 0.16s, transform 0.16s;
+}
+
+.option-choice:hover {
+  border-color: #ff1f6d;
+  background: #fff0f5;
+}
+
+.option-choice:active {
+  transform: scale(0.988);
+}
+
+.option-choice-selected {
+  border-color: #ff1f6d;
+  background: #fff0f5;
+  box-shadow: inset 4px 0 #ff1f6d;
+}
+
+.option-token {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ff1f6d;
+  background: #ffffff;
+  color: #ff1f6d;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blueprint-panel, .metric-card, .option-choice {
+    transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}

@@ -39,6 +39,27 @@ export function exportTableToExcel(tableName: string, students: Array<{ name?: s
   downloadWorkbook(`${safeName}.xlsx`, tableName.slice(0, 30) || "Students", rows);
 }
 
+export function exportResultsToExcel(filename: string, results: Array<{ assessmentTitle: string; studentName?: string | null; studentEmail?: string | null; tables?: string; status: string; score?: number | null; totalMarks: number; percentage?: number | null; violationCount: number; resultsPublished: boolean; submittedAt?: Date | string | null }>) {
+  const headers = ["Assessment", "Student Name", "Email", "Table(s)", "Status", "Score", "Total Marks", "Percentage (%)", "Integrity Events", "Published to Student", "Submitted At"];
+  const rows: string[][] = [
+    headers,
+    ...results.map(r => [
+      r.assessmentTitle || "",
+      r.studentName || "",
+      r.studentEmail || "",
+      r.tables || "No table",
+      r.status || "",
+      r.score !== null && r.score !== undefined ? String(r.score) : "0",
+      String(r.totalMarks || 0),
+      r.percentage !== null && r.percentage !== undefined ? `${r.percentage}%` : "0%",
+      String(r.violationCount || 0),
+      r.resultsPublished ? "Yes" : "No",
+      r.submittedAt ? new Date(r.submittedAt).toLocaleString() : "—",
+    ]),
+  ];
+  downloadWorkbook(filename.endsWith(".xlsx") ? filename : `${filename}.xlsx`, "Results", rows);
+}
+
 export function downloadQuestionTemplate() {
   downloadWorkbook("northstar-mcq-template.xlsx", "Questions", [
     [...QUESTION_TEMPLATE_HEADERS],
